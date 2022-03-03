@@ -1,0 +1,63 @@
+class ellipse {
+  float x, y, r, v;
+  float xspeed = 0.5;
+  float yspeed = 0.0;
+  
+  ellipse(int tempX, int tempY, int tempR, int tempV){
+    x = tempX;
+    y = tempY;
+    r = tempR;
+    v = tempV;
+  }
+
+  void display(){
+    ellipse(x, y, r, v);
+  }
+  
+  void update(){
+    x += xspeed;
+  }
+  
+  void checkEdges(){
+    if(x > width || x < 0) {
+      xspeed *= -1;
+    }
+  }
+  
+   boolean overlaps(ellipse other){
+    float d = dist(x/2, y/2, other.x, other.y);
+    if (d < r + other.r) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  void changeDirection(){
+    xspeed*=-1;
+  }
+
+}
+
+ellipse b1, b2;
+
+void setup(){
+  size(200, 200);
+  b1 = new ellipse(0, 100, 50, 50);
+  b2 = new ellipse(200, 100, 50, 50);
+}
+
+void draw(){ 
+  b1.display();
+  b1.update();
+  b1.checkEdges();
+  
+  b2.display();
+  b2.update();
+  b2.checkEdges();
+  
+  if (b1.overlaps(b2)){
+    b1.changeDirection();
+    b2.changeDirection();
+  }
+}
